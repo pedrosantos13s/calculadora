@@ -15,6 +15,7 @@ madjust = 1
 dadjust = 1
 muadjust = 1
 j = 0
+m = ";"
 def btnActionClick(action):
     global j 
     global m
@@ -26,7 +27,12 @@ def btnActionClick(action):
         j=0
 ## SOMA ###############
     if action == "+":
-        j = j + int(main_input.get())
+        if m == "=":
+            j = float(main_input.get())
+            main_input.delete(0, len(main_input.get()))
+            m = "+"
+            return
+        j = j + float(main_input.get())
         main_input.delete(0, len(main_input.get()))
         m = "+"
         #print("+")
@@ -34,10 +40,10 @@ def btnActionClick(action):
 ## SUBTRAÇÃO ###############
     if action == "-":
         if madjust == 1:
-            j = 2 * int(main_input.get())
+            j = 2 * float(main_input.get())
             madjust = 0
         #print(j)
-        j = j - int(main_input.get())
+        j = j - float(main_input.get())
         main_input.delete(0, len(main_input.get()))
         m = "-"
         #print("-")
@@ -45,9 +51,9 @@ def btnActionClick(action):
 ## DIVISÃO ######################
     if action == "/":
         if dadjust == 1:
-            j = int(main_input.get()) * int(main_input.get())
+            j = float(main_input.get()) * float(main_input.get())
             dadjust = 0
-        j = j / int(main_input.get())
+        j = j / float(main_input.get())
         main_input.delete(0, len(main_input.get()))
         m = "/"
         #print("/")
@@ -57,7 +63,7 @@ def btnActionClick(action):
         if muadjust == 1:
             j = 1
             muadjust = 0
-        j = j * int(main_input.get())
+        j = j * float(main_input.get())
         main_input.delete(0, len(main_input.get()))
         m = "*"
         #print("*")
@@ -70,21 +76,22 @@ def btnActionClick(action):
         dadjust=1
         muadjust=1
         if m == "+":
-            j = j + int(main_input.get())
+            j = j + float(main_input.get())
             main_input.delete(0, len(main_input.get()))
         if m == "-":
             #print(j)
-            j = j - int(main_input.get())
+            j = j - float(main_input.get())
             main_input.delete(0, len(main_input.get()))
         if m == "/":
             #print(j)
-            j = j / int(main_input.get())
+            j = j / float(main_input.get())
             main_input.delete(0, len(main_input.get()))
         if m == "*":
             #print(j)
-            j = j * int(main_input.get())
+            j = j * float(main_input.get())
             main_input.delete(0, len(main_input.get()))
         main_input.insert(len(main_input.get()), str(j))
+        m = "="
         #print("=")
         #print(j)
     return
@@ -141,6 +148,9 @@ btn_division = Button(window, text="/", padx=21, pady=7,
 btn_co = Button(window, text="<", padx=21, pady=7,
                command=lambda: btnActionClick("clear"))
 
+btn_dot = Button(window, text=".", padx=21, pady=7,
+               command=lambda: btnActionClick("dot"))
+
 
 # Construir tela
 main_input.grid(row=0, column=0, columnspan=4)
@@ -151,6 +161,7 @@ btn_minus.grid(row=3, column=3)
 btn_multiplication.grid(row=2, column=3)
 btn_division.grid(row=1, column=3)
 btn_co.grid(row=1, column=2)
+btn_dot.grid(row=5, column=2)
 
 # Rodar Tela
 window.mainloop()
